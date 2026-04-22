@@ -1,0 +1,14 @@
+## Interface: 30300
+## Title: ConsolePort Enhanced Tools
+## Notes: Optional ConsolePortLK tools and helpers.
+## Version: 0.1.0
+## Author: ConsolePortEnhancedTools contributors
+## RequiredDeps: ConsolePort
+## OptionalDeps: ConsolePortBar
+## SavedVariables: ConsolePortEnhancedToolsDB
+
+Bindings.xml
+
+Core.lua
+FoodDB.lua
+FeedPetAssistant.lua

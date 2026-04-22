@@ -1,0 +1,7 @@
+<Bindings>
+	<Binding name="CPE_FEEDPETASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_PETMANAGEMENT">
+		if ConsolePortEnhancedToolsFeedPetAssistant then
+			ConsolePortEnhancedToolsFeedPetAssistant:Click("LeftButton");
+		end
+	</Binding>
+</Bindings>
