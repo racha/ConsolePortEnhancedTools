@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0
+## 2026.04.22
 
 - Added standalone `ConsolePortEnhancedTools` addon scaffold.
 - Documented this project as a ConsolePortLK extension for WotLK 3.3.5.

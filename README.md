@@ -41,6 +41,10 @@ again, `Space`, `Enter`, or click the food button to feed it.
 - `/cpet feed`
 - `/cpe feed`
 
+## Versioning
+
+Releases use date-based versioning in `YYYY.MM.DD` format.
+
 ## Project Rules
 
 - Do not edit ConsolePortLK source files.

@@ -1,7 +1,7 @@
 ## Interface: 30300
 ## Title: ConsolePort Enhanced Tools
 ## Notes: Optional ConsolePortLK tools and helpers.
-## Version: 0.1.0
+## Version: 2026.04.22
 ## Author: ConsolePortEnhancedTools contributors
 ## RequiredDeps: ConsolePort
 ## OptionalDeps: ConsolePortBar
