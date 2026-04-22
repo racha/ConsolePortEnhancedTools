@@ -1,33 +1,41 @@
 # ConsolePort Enhanced Tools
 
-ConsolePort Enhanced Tools is a standalone extension addon for
-[ConsolePortLK](https://github.com/leoaviana/ConsolePortLK), the Wrath of the
-Lich King 3.3.5a backport of ConsolePort.
+ConsolePort Enhanced Tools adds extra controller-friendly tools for hunters
+playing World of Warcraft 3.3.5a with ConsolePortLK.
 
-This addon is built specifically for the World of Warcraft WotLK 3.3.5 client.
-It requires `ConsolePort` from ConsolePortLK and does not modify any
-ConsolePortLK source files.
+## Requirements
 
-The goal is to add focused controller-friendly tools on top of ConsolePortLK
-while keeping this project deployable and versioned as its own GitHub addon.
+- World of Warcraft 3.3.5a
+- ConsolePortLK
 
-## Current Module
+## Feed Pet Assistant
 
-### Feed Pet Assistant
+Feed Pet Assistant helps hunters quickly find and feed usable pet food from
+their bags.
 
-Feed Pet Assistant helps hunters feed their pets from a controller-friendly ring.
-
-- Adds a `Pet Management` section to ConsolePort's custom binding list.
-- Adds a `Feed Pet Assistant` binding.
 - Scans the player's bags for known pet food.
-- Filters food by the active pet's diet from `GetPetFoodTypes()`.
-- Rates food by pet level versus food item level.
-- Opens a ring with the best available compatible foods.
+- Shows only food your current pet can eat.
+- Rates food by pet level so you can avoid weak food.
+- Opens a controller-friendly food ring.
 - Feeds the selected food out of combat.
 
-Press the assigned Feed Pet Assistant binding once to open the ring. Move with
-the normal movement keys/stick to select a food, then press the same binding
-again, `Space`, `Enter`, or click the food button to feed it.
+## Setup
+
+1. Install ConsolePortLK.
+2. Copy `ConsolePortEnhancedTools` into `Interface/AddOns`.
+3. Enable `ConsolePort Enhanced Tools` on the character select addon screen.
+4. Bind `Feed Pet Assistant` from the `Pet Management` section.
+
+## Usage
+
+Press the Feed Pet Assistant binding to open the food ring. Move with the normal
+movement keys or controller stick to select food, then press the same binding
+again to feed it.
+
+You can also use:
+
+- `/cpet feed`
+- `/cpe feed`
 
 ## Food Ratings
 
@@ -35,11 +43,6 @@ again, `Space`, `Enter`, or click the food button to feed it.
 - `Good`: food is 16-25 levels below the pet.
 - `Weak`: food is 26-35 levels below the pet.
 - `Too low`: food is more than 35 levels below the pet and is not recommended.
-
-## Commands
-
-- `/cpet feed`
-- `/cpe feed`
 
 ## Versioning
 
