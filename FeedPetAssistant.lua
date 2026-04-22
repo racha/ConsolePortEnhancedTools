@@ -50,6 +50,10 @@ local function GetFeedPetSpellName()
 	return GetSpellInfo(FEED_PET_SPELL_ID) or "Feed Pet"
 end
 
+local function GetFeedMacro(food)
+	return ("/cast %s\n/use %d %d"):format(GetFeedPetSpellName(), food.bag, food.slot)
+end
+
 local function GetFoodQuality(itemLevel, petLevel)
 	if not itemLevel or itemLevel <= 0 or not petLevel then
 		return QUALITY.unknown
@@ -145,24 +149,16 @@ function Assistant:ScanFood()
 	return foods, dietText
 end
 
-function Assistant:Feed(food)
-	if not food then return end
-	if InCombatLockdown() then
-		CPE:Print("You cannot feed your pet in combat.")
-		return
+function Assistant:SetFeedAction(button, food)
+	if not button then return end
+	if InCombatLockdown() then return end
+	if food then
+		button:SetAttribute("type", "macro")
+		button:SetAttribute("macrotext", GetFeedMacro(food))
+	else
+		button:SetAttribute("type", nil)
+		button:SetAttribute("macrotext", nil)
 	end
-	if not UnitExists("pet") then
-		CPE:Print("No active pet.")
-		return
-	end
-	if UnitIsDead("pet") then
-		CPE:Print("Your pet is dead.")
-		return
-	end
-
-	CastSpellByName(GetFeedPetSpellName())
-	UseContainerItem(food.bag, food.slot)
-	self:Hide()
 end
 
 function Assistant:Select(index)
@@ -177,6 +173,7 @@ function Assistant:Select(index)
 	self.selectedIndex = index
 	button.Selected:Show()
 	self.Detail:SetText(button.food.name .. "\n" .. ColorText(button.food.quality.text, button.food.quality))
+	self:SetFeedAction(launcher, button.food)
 end
 
 function Assistant:UpdateSelectionFromKeys()
@@ -199,11 +196,7 @@ end
 
 function Assistant:ToggleFromBinding()
 	if self:IsShown() then
-		if self.selected and self.selected.food then
-			self:Feed(self.selected.food)
-		else
-			self:Hide()
-		end
+		self:Hide()
 	else
 		self:Open()
 	end
@@ -250,6 +243,7 @@ function Assistant:Refresh()
 		local food = self.foods[i]
 		if i <= count and food then
 			button.food = food
+			self:SetFeedAction(button, food)
 			SetIcon(button.Icon, food.texture)
 			button.Count:SetText(food.count > 1 and food.count or "")
 			button.Name:SetText(food.name)
@@ -259,6 +253,7 @@ function Assistant:Refresh()
 			button:Show()
 		else
 			button.food = nil
+			self:SetFeedAction(button)
 			button:Hide()
 		end
 	end
@@ -271,7 +266,7 @@ function Assistant:Refresh()
 end
 
 function Assistant:CreateButton(index)
-	local button = CreateFrame("Button", "$parentFood" .. index, self)
+	local button = CreateFrame("Button", "$parentFood" .. index, self, "SecureActionButtonTemplate")
 	button:SetSize(64, 64)
 	button:RegisterForClicks("AnyUp")
 
@@ -309,8 +304,8 @@ function Assistant:CreateButton(index)
 	button.Quality = button:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	button.Quality:SetPoint("TOP", button.Level, "BOTTOM", 0, -1)
 
-	button:SetScript("OnClick", function(self)
-		Assistant:Feed(self.food)
+	button:SetScript("PostClick", function()
+		Assistant:Hide()
 	end)
 	button:SetScript("OnEnter", function(self)
 		Assistant:Select(index)
@@ -331,12 +326,12 @@ function Assistant:CreateButton(index)
 end
 
 function Assistant:CreateLauncher()
-	launcher = CreateFrame("Button", "ConsolePortEnhancedToolsFeedPetAssistant", UIParent)
+	launcher = CreateFrame("Button", "ConsolePortEnhancedToolsFeedPetAssistant", UIParent, "SecureActionButtonTemplate")
 	launcher:SetSize(1, 1)
 	launcher:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -20, 20)
 	launcher:SetAlpha(0)
 	launcher:RegisterForClicks("AnyUp")
-	launcher:SetScript("OnClick", function()
+	launcher:SetScript("PostClick", function()
 		Assistant:ToggleFromBinding()
 	end)
 	launcher:Show()
@@ -356,7 +351,7 @@ function Assistant:CreateFrame()
 	self.BG:SetAlpha(0.78)
 
 	self.Glow = self:CreateTexture(nil, "BORDER")
-	self.Glow:SetTexture("Interface\\AddOns\\ConsolePort\\Textures\\Utility\\UtilityGlow8")
+	self.Glow:SetTexture("Interface\\AddOns\\ConsolePort\\Textures\\Utility\\UtilityCircle")
 	self.Glow:SetSize(430, 430)
 	self.Glow:SetPoint("CENTER")
 	self.Glow:SetAlpha(0.38)
@@ -389,11 +384,6 @@ function Assistant:CreateFrame()
 		if key == "ESCAPE" then
 			frame:Hide()
 			return
-		elseif key == "SPACE" or key == "ENTER" then
-			if frame.selected and frame.selected.food then
-				frame:Feed(frame.selected.food)
-			end
-			return
 		end
 
 		local direction = KEY_TO_DIRECTION[key]
@@ -415,6 +405,7 @@ function Assistant:CreateFrame()
 		end
 		frame.selected = nil
 		frame.selectedIndex = nil
+		frame:SetFeedAction(launcher)
 		wipe(frame.keys)
 	end)
 end
