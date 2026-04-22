@@ -3,6 +3,7 @@
 ## 0.1.0
 
 - Added standalone `ConsolePortEnhancedTools` addon scaffold.
+- Documented this project as a ConsolePortLK extension for WotLK 3.3.5.
 - Added `Feed Pet Assistant` hunter module.
 - Added bag scanning for known pet food.
 - Added pet diet filtering using `GetPetFoodTypes()`.

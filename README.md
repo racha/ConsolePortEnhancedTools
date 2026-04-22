@@ -1,7 +1,15 @@
 # ConsolePort Enhanced Tools
 
-ConsolePort Enhanced Tools is a standalone companion addon for ConsolePortLK.
-It requires `ConsolePort` and does not modify ConsolePortLK files.
+ConsolePort Enhanced Tools is a standalone extension addon for
+[ConsolePortLK](https://github.com/leoaviana/ConsolePortLK), the Wrath of the
+Lich King 3.3.5a backport of ConsolePort.
+
+This addon is built specifically for the World of Warcraft WotLK 3.3.5 client.
+It requires `ConsolePort` from ConsolePortLK and does not modify any
+ConsolePortLK source files.
+
+The goal is to add focused controller-friendly tools on top of ConsolePortLK
+while keeping this project deployable and versioned as its own GitHub addon.
 
 ## Current Module
 
