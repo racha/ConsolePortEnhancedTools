@@ -1,7 +1,7 @@
 # ConsolePort Enhanced Tools
 
-ConsolePort Enhanced Tools adds extra controller-friendly tools for hunters
-playing World of Warcraft 3.3.5a with ConsolePortLK.
+ConsolePort Enhanced Tools adds controller-friendly rings for common World of
+Warcraft 3.3.5a actions.
 
 ## Requirements
 
@@ -19,23 +19,52 @@ their bags.
 - Opens a controller-friendly food ring.
 - Feeds the selected food out of combat.
 
+## Aspect Assistant
+
+Aspect Assistant shows trained hunter aspects in a controller-friendly ring.
+
+- Shows only aspects available in your spellbook.
+- Casts the selected aspect when released.
+- Marks your active aspect in green.
+- Marks an aspect buff provided by another hunter in red.
+- Shows who provided the external aspect buff when known.
+
+## Other Rings
+
+- `Trap Ring`: trained hunter traps.
+- `Track Ring`: trained tracking spells.
+- `Quest Item Ring`: usable quest items from your bags.
+- `Consumables Ring`: best food, best drink, and usable consumables.
+- `Profession Assistant`: known profession tools.
+- `Party Assistant`: party member target selection.
+- `Ammo Assistant`: equipped ammo and bag ammo switching.
+
 ## Setup
 
 1. Install ConsolePortLK.
 2. Copy `ConsolePortEnhancedTools` into `Interface/AddOns`.
 3. Enable `ConsolePort Enhanced Tools` on the character select addon screen.
-4. Bind `Feed Pet Assistant` from the `Pet Management` section.
+4. Bind the tools you want from the `ConsolePort Enhancement` section.
 
 ## Usage
 
-Press the Feed Pet Assistant binding to open the food ring. Move with the normal
-movement keys or controller stick to select food, then press the same binding
-again to feed it.
+Hold an assistant binding to open its ring. Move with the normal movement keys
+or controller stick to select an item, spell, or target. Release the binding to
+use the selected ring item.
 
 You can also use:
 
 - `/cpet feed`
+- `/cpet aspect`
+- `/cpet trap`
+- `/cpet track`
+- `/cpet quest`
+- `/cpet consumables`
+- `/cpet profession`
+- `/cpet party`
+- `/cpet ammo`
 - `/cpe feed`
+- `/cpe aspect`
 
 ## Food Ratings
 

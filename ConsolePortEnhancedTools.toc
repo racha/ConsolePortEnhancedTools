@@ -10,5 +10,14 @@
 Bindings.xml
 
 Core.lua
+RingHelper.lua
 FoodDB.lua
 FeedPetAssistant.lua
+AspectAssistant.lua
+TrapAssistant.lua
+QuestItemAssistant.lua
+TrackAssistant.lua
+ConsumablesAssistant.lua
+ProfessionAssistant.lua
+PartyAssistant.lua
+AmmoAssistant.lua

@@ -1,7 +1,47 @@
 <Bindings>
-	<Binding name="CPE_FEEDPETASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_PETMANAGEMENT">
-		if ConsolePortEnhancedToolsFeedPetAssistant then
-			ConsolePortEnhancedToolsFeedPetAssistant:Click("LeftButton");
+	<Binding name="CPE_FEEDPETASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("FeedPetAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_ASPECTASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("AspectAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_TRAPASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("TrapAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_QUESTITEMASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("QuestItemAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_TRACKASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("TrackAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_CONSUMABLESASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("ConsumablesAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_PROFESSIONASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("ProfessionAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_PARTYASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("PartyAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_AMMOASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("AmmoAssistant", keystate);
 		end
 	</Binding>
 </Bindings>

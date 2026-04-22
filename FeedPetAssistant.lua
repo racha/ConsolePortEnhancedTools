@@ -5,10 +5,7 @@ local Assistant = CreateFrame("Frame", "ConsolePortEnhancedToolsFeedPetRing", UI
 ns.FeedPetAssistant = Assistant
 CPE:RegisterModule("FeedPetAssistant", Assistant)
 
-local MAX_BUTTONS = 8
-local RADIUS = 142
 local FEED_PET_SPELL_ID = 6991
-local launcher
 
 local QUALITY = {
 	good = { text = "Best", happiness = 35, r = 0.25, g = 1.00, b = 0.35, rank = 4 },
@@ -18,17 +15,6 @@ local QUALITY = {
 	unknown = { text = "Unknown", happiness = 0, r = 0.70, g = 0.70, b = 1.00, rank = 0 },
 }
 
-local KEY_TO_DIRECTION = {
-	W = "UP",
-	UP = "UP",
-	A = "LEFT",
-	LEFT = "LEFT",
-	S = "DOWN",
-	DOWN = "DOWN",
-	D = "RIGHT",
-	RIGHT = "RIGHT",
-}
-
 local function ColorText(text, q)
 	return ("|cff%02x%02x%02x%s|r"):format(
 		math.floor(q.r * 255 + 0.5),
@@ -36,14 +22,6 @@ local function ColorText(text, q)
 		math.floor(q.b * 255 + 0.5),
 		text
 	)
-end
-
-local function SetIcon(texture, icon)
-	if SetPortraitToTexture then
-		SetPortraitToTexture(texture, icon)
-	else
-		texture:SetTexture(icon)
-	end
 end
 
 local function GetFeedPetSpellName()
@@ -108,10 +86,24 @@ local function SortFoods(a, b)
 	return a.name < b.name
 end
 
-function Assistant:ScanFood()
+local function ValidateFeedAssistant()
+	if not CPE:IsHunter() then
+		CPE:Print("Feed Pet Assistant is only available to hunters.")
+		return false
+	end
+	if not UnitExists("pet") then
+		CPE:Print("No active pet.")
+		return false
+	end
+	return true
+end
+
+local function ScanFood(self)
 	local diet, dietText = GetDietSet()
 	local petLevel = UnitLevel("pet")
 	local foods = {}
+
+	self.dietText = dietText
 
 	for bag = 0, 4 do
 		for slot = 1, GetContainerNumSlots(bag) do
@@ -146,10 +138,10 @@ function Assistant:ScanFood()
 	end
 
 	table.sort(foods, SortFoods)
-	return foods, dietText
+	return foods
 end
 
-function Assistant:SetFeedAction(button, food)
+local function SetFoodButtonAction(self, button, food)
 	if not button then return end
 	if InCombatLockdown() then return end
 	if food then
@@ -161,208 +153,61 @@ function Assistant:SetFeedAction(button, food)
 	end
 end
 
-function Assistant:Select(index)
-	local button = self.buttons and self.buttons[index]
-	if not button or not button:IsShown() or not button.food then return end
-
-	if self.selected and self.selected.Selected then
-		self.selected.Selected:Hide()
-	end
-
-	self.selected = button
-	self.selectedIndex = index
-	button.Selected:Show()
-	self.Detail:SetText(button.food.name .. "\n" .. ColorText(button.food.quality.text, button.food.quality))
-	self:SetFeedAction(launcher, button.food)
-end
-
-function Assistant:UpdateSelectionFromKeys()
-	local keys = self.keys
-	local up, down, left, right = keys.UP, keys.DOWN, keys.LEFT, keys.RIGHT
-	local index =
-		(up and right and 2) or
-		(down and right and 4) or
-		(down and left and 6) or
-		(up and left and 8) or
-		(up and 1) or
-		(right and 3) or
-		(down and 5) or
-		(left and 7)
-
-	if index then
-		self:Select(index)
-	end
-end
-
-function Assistant:ToggleFromBinding()
-	if self:IsShown() then
-		self:Hide()
+local function OnSelect(self, button, food)
+	if food then
+		self.Detail:SetText(food.name .. "\n" .. ColorText(food.quality.text, food.quality))
 	else
-		self:Open()
+		self.Detail:SetText("|cff888888No food|r")
 	end
 end
 
-function Assistant:Open()
-	if InCombatLockdown() then
-		CPE:Print("Feed Pet Assistant is unavailable in combat.")
-		return
-	end
-	if not CPE:IsHunter() then
-		CPE:Print("Feed Pet Assistant is only available to hunters.")
-		return
-	end
-	if not UnitExists("pet") then
-		CPE:Print("No active pet.")
-		return
-	end
-
-	local foods, dietText = self:ScanFood()
-	self.foods = foods
-	self.dietText = dietText
-
-	if #foods == 0 then
-		CPE:Print("No known compatible pet food found in your bags.")
-		return
-	end
-
-	self:Refresh()
-	self:Show()
-	self:Select(1)
-end
-
-function Assistant:Refresh()
-	local count = math.min(#self.foods, MAX_BUTTONS)
+local function RefreshHeader(self)
 	local petLevel = UnitLevel("pet") or "?"
-
 	self.Title:SetText("Feed Pet Assistant")
 	self.Subtitle:SetText(("Pet level %s  |  %s"):format(petLevel, GetPetHappinessText()))
 	self.Diet:SetText("Eats: " .. (self.dietText ~= "" and self.dietText or "unknown"))
+end
 
-	for i = 1, MAX_BUTTONS do
-		local button = self.buttons[i]
-		local food = self.foods[i]
-		if i <= count and food then
-			button.food = food
-			self:SetFeedAction(button, food)
-			SetIcon(button.Icon, food.texture)
-			button.Count:SetText(food.count > 1 and food.count or "")
-			button.Name:SetText(food.name)
-			button.Level:SetText(("iLvl %s"):format(food.itemLevel > 0 and food.itemLevel or "?"))
-			button.Quality:SetText(ColorText(food.quality.text, food.quality))
-			button.Border:SetVertexColor(food.quality.r, food.quality.g, food.quality.b)
-			button:Show()
-		else
-			button.food = nil
-			self:SetFeedAction(button)
-			button:Hide()
-		end
-	end
+local function UpdateFoodButton(self, button, food)
+	button.food = food
+	ns.RingHelper:SetIcon(button.Icon, food.texture)
+	button.Count:SetText(food.count > 1 and food.count or "")
+	self:SetButtonName(button, food.name, 13)
+	button.Level:SetText(("iLvl %s"):format(food.itemLevel > 0 and food.itemLevel or "?"))
+	button.Quality:SetText(ColorText(food.quality.text, food.quality))
+	self:SetButtonStateColor(button, food.quality.r, food.quality.g, food.quality.b)
+end
 
-	if #self.foods > MAX_BUTTONS then
-		self.More:SetText(("Showing best %d of %d foods."):format(MAX_BUTTONS, #self.foods))
+local function ClearFoodButton(self, button)
+	button.food = nil
+	button.Icon:SetTexture(nil)
+	button.Count:SetText("")
+	self:SetButtonName(button, "")
+	button.Level:SetText("")
+	button.Quality:SetText("")
+	self:ClearButtonState(button)
+end
+
+local function AfterRefresh(self, foods)
+	if #foods > self.maxButtons then
+		self.More:SetText(("Showing best %d of %d foods."):format(self.maxButtons, #foods))
 	else
 		self.More:SetText("")
 	end
 end
 
-function Assistant:CreateButton(index)
-	local button = CreateFrame("Button", "$parentFood" .. index, self, "SecureActionButtonTemplate")
-	button:SetSize(64, 64)
-	button:RegisterForClicks("AnyUp")
-
-	local angle = math.rad(90 - ((index - 1) * 45))
-	button:SetPoint("CENTER", self, "CENTER", math.cos(angle) * RADIUS, math.sin(angle) * RADIUS)
-
-	button.Icon = button:CreateTexture(nil, "ARTWORK")
-	button.Icon:SetAllPoints(button)
-
-	button.Border = button:CreateTexture(nil, "OVERLAY")
-	button.Border:SetTexture("Interface\\AddOns\\ConsolePort\\Textures\\UtilityBorder")
-	button.Border:SetSize(82, 82)
-	button.Border:SetPoint("CENTER")
-
-	button.Selected = button:CreateTexture(nil, "OVERLAY")
-	button.Selected:SetTexture("Interface\\AddOns\\ConsolePort\\Textures\\Button\\Hilite")
-	button.Selected:SetBlendMode("ADD")
-	button.Selected:SetAllPoints(button)
-	button.Selected:Hide()
-
+local function CreateFoodRegions(self, button)
 	button.Count = button:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
 	button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
-
-	button.Name = button:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	button.Name:SetWidth(104)
-	button.Name:SetPoint("TOP", button, "BOTTOM", 0, -4)
-	button.Name:SetJustifyH("CENTER")
-	if button.Name.SetMaxLines then
-		button.Name:SetMaxLines(2)
-	end
 
 	button.Level = button:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	button.Level:SetPoint("TOP", button.Name, "BOTTOM", 0, -1)
 
 	button.Quality = button:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	button.Quality:SetPoint("TOP", button.Level, "BOTTOM", 0, -1)
-
-	button:SetScript("PostClick", function()
-		Assistant:Hide()
-	end)
-	button:SetScript("OnEnter", function(self)
-		Assistant:Select(index)
-		if self.food then
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetBagItem(self.food.bag, self.food.slot)
-			GameTooltip:AddLine(" ")
-			GameTooltip:AddLine("Pet food: " .. self.food.foodType, 0.6, 0.8, 1)
-			GameTooltip:AddLine(("Happiness: %s per tick"):format(self.food.quality.happiness), self.food.quality.r, self.food.quality.g, self.food.quality.b)
-			GameTooltip:Show()
-		end
-	end)
-	button:SetScript("OnLeave", function()
-		GameTooltip:Hide()
-	end)
-
-	return button
 end
 
-function Assistant:CreateLauncher()
-	launcher = CreateFrame("Button", "ConsolePortEnhancedToolsFeedPetAssistant", UIParent, "SecureActionButtonTemplate")
-	launcher:SetSize(1, 1)
-	launcher:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -20, 20)
-	launcher:SetAlpha(0)
-	launcher:RegisterForClicks("AnyUp")
-	launcher:SetScript("PostClick", function()
-		Assistant:ToggleFromBinding()
-	end)
-	launcher:Show()
-end
-
-function Assistant:CreateFrame()
-	self:SetSize(420, 420)
-	self:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-	self:SetFrameStrata("DIALOG")
-	self:EnableKeyboard(true)
-	self:Hide()
-
-	self.BG = self:CreateTexture(nil, "BACKGROUND")
-	self.BG:SetTexture("Interface\\AddOns\\ConsolePort\\Textures\\Window\\Circle")
-	self.BG:SetSize(330, 330)
-	self.BG:SetPoint("CENTER")
-	self.BG:SetAlpha(0.78)
-
-	self.Glow = self:CreateTexture(nil, "BORDER")
-	self.Glow:SetTexture("Interface\\AddOns\\ConsolePort\\Textures\\Utility\\UtilityCircle")
-	self.Glow:SetSize(430, 430)
-	self.Glow:SetPoint("CENTER")
-	self.Glow:SetAlpha(0.38)
-	self.Glow:SetBlendMode("ADD")
-
-	self.Title = self:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-	self.Title:SetPoint("CENTER", self, "CENTER", 0, 44)
-
-	self.Subtitle = self:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-	self.Subtitle:SetPoint("TOP", self.Title, "BOTTOM", 0, -8)
-
+local function CreateFeedFrameRegions(self)
 	self.Diet = self:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	self.Diet:SetPoint("TOP", self.Subtitle, "BOTTOM", 0, -6)
 
@@ -373,44 +218,37 @@ function Assistant:CreateFrame()
 
 	self.More = self:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
 	self.More:SetPoint("BOTTOM", self, "BOTTOM", 0, 42)
-
-	self.buttons = {}
-	for i = 1, MAX_BUTTONS do
-		self.buttons[i] = self:CreateButton(i)
-	end
-
-	self.keys = {}
-	self:SetScript("OnKeyDown", function(frame, key)
-		if key == "ESCAPE" then
-			frame:Hide()
-			return
-		end
-
-		local direction = KEY_TO_DIRECTION[key]
-		if direction then
-			frame.keys[direction] = true
-			frame:UpdateSelectionFromKeys()
-		end
-	end)
-	self:SetScript("OnKeyUp", function(frame, key)
-		local direction = KEY_TO_DIRECTION[key]
-		if direction then
-			frame.keys[direction] = nil
-			frame:UpdateSelectionFromKeys()
-		end
-	end)
-	self:SetScript("OnHide", function(frame)
-		if frame.selected and frame.selected.Selected then
-			frame.selected.Selected:Hide()
-		end
-		frame.selected = nil
-		frame.selectedIndex = nil
-		frame:SetFeedAction(launcher)
-		wipe(frame.keys)
-	end)
 end
 
-function Assistant:OnInitialize()
-	self:CreateLauncher()
-	self:CreateFrame()
+local function ShowFoodTooltip(self, button, food)
+	if not food then return end
+	GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
+	GameTooltip:SetBagItem(food.bag, food.slot)
+	GameTooltip:AddLine(" ")
+	GameTooltip:AddLine("Pet food: " .. food.foodType, 0.6, 0.8, 1)
+	GameTooltip:AddLine(("Happiness: %s per tick"):format(food.quality.happiness), food.quality.r, food.quality.g, food.quality.b)
+	GameTooltip:Show()
 end
+
+ns.RingHelper:Mixin(Assistant, {
+	title = "Feed Pet Assistant",
+	launcherName = "ConsolePortEnhancedToolsFeedPetAssistant",
+	keyOwnerName = "ConsolePortEnhancedToolsFeedPetKeyOwner",
+	selectorPrefix = "ConsolePortEnhancedToolsFeedPetSelect",
+	buttonName = "Food",
+	itemKey = "food",
+	itemsKey = "foods",
+	idleText = "|cff888888Move to select food|r",
+	emptyMessage = "No known compatible pet food found in your bags.",
+	validate = ValidateFeedAssistant,
+	scan = ScanFood,
+	setButtonAction = SetFoodButtonAction,
+	onSelect = OnSelect,
+	refreshHeader = RefreshHeader,
+	updateButton = UpdateFoodButton,
+	clearButton = ClearFoodButton,
+	afterRefresh = AfterRefresh,
+	createButtonRegions = CreateFoodRegions,
+	createFrameRegions = CreateFeedFrameRegions,
+	onEnter = ShowFoodTooltip,
+})
