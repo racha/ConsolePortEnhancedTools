@@ -44,10 +44,3 @@ again, `Space`, `Enter`, or click the food button to feed it.
 ## Versioning
 
 Releases use date-based versioning in `YYYY.MM.DD` format.
-
-## Project Rules
-
-- Do not edit ConsolePortLK source files.
-- Keep all code and assets under `ConsolePortEnhancedTools/`.
-- Runtime integration with ConsolePortLK is allowed when it is done from this addon.
-- Maintain this README and `CHANGELOG.md` as the addon grows.
