@@ -6,7 +6,7 @@ playing World of Warcraft 3.3.5a with ConsolePortLK.
 ## Requirements
 
 - World of Warcraft 3.3.5a
-- ConsolePortLK
+- [ConsolePortLK](https://github.com/leoaviana/ConsolePortLK)
 
 ## Feed Pet Assistant
 
