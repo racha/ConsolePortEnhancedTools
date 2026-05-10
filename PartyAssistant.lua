@@ -38,6 +38,7 @@ local function ScanParty()
 				health = GetUnitHealthText(unit),
 				dead = UnitIsDeadOrGhost(unit),
 				offline = not UnitIsConnected(unit),
+				description = class and LOCALIZED_CLASS_NAMES_MALE and LOCALIZED_CLASS_NAMES_MALE[class],
 			})
 		end
 	end
@@ -59,7 +60,7 @@ end
 
 local function OnSelect(self, button, member)
 	if member then
-		self.Detail:SetText(member.name .. "\n" .. member.health)
+		self.Detail:SetText(CPE:AppendDescription(member.name .. "\n" .. member.health, member.description))
 	else
 		self.Detail:SetText("|cff888888No party member|r")
 	end

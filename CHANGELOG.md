@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026.05.10
+
+- Added `ConsolePort Enhanced General` and `ConsolePort Enhanced Hunter` binding groups.
+- Colored binding group suffixes with group/class colors for easier lookup.
+- Added empty-state rings so assistants show an empty wheel instead of only printing chat errors.
+- Added highlighted-item description text across assistant rings.
+- Added combat-safe ring opening with cached secure actions where the 3.3.5 client allows it.
+- Added `Vehicle Control Ring` for exit vehicle and vehicle seat controls.
+- Added `Marker Ring` for raid target icons.
+- Added `Mount Ring` for learned companion mounts and dismount.
+- Added `Emote Ring` for common social emotes.
+- Added `Quick Message Ring` for predefined world/group messages.
+- Added `Chat Ring` for opening common chat prefixes out of combat.
+- Added 3.3.5-safe chat fallbacks and disabled chat actions in combat to avoid protected-action taint.
+- Added game-menu cleanup so Toggle Game Menu closes any stuck enhanced ring.
+- Verified all enhanced-tools Lua files with `luac5.4 -p`.
+
 ## 2026.04.22
 
 - Added shared `RingHelper` for controller ring modules.

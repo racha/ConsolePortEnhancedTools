@@ -1,7 +1,7 @@
 ## Interface: 30300
 ## Title: ConsolePort Enhanced Tools
 ## Notes: Optional ConsolePortLK tools and helpers.
-## Version: 2026.04.22
+## Version: 2026.05.10
 ## Author: ConsolePortEnhancedTools contributors
 ## RequiredDeps: ConsolePort
 ## OptionalDeps: ConsolePortBar
@@ -16,8 +16,14 @@ FeedPetAssistant.lua
 AspectAssistant.lua
 TrapAssistant.lua
 QuestItemAssistant.lua
+MarkerAssistant.lua
+MountAssistant.lua
+EmoteAssistant.lua
+QuickMessageAssistant.lua
+ChatAssistant.lua
 TrackAssistant.lua
 ConsumablesAssistant.lua
 ProfessionAssistant.lua
 PartyAssistant.lua
+VehicleAssistant.lua
 AmmoAssistant.lua

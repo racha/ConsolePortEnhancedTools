@@ -131,6 +131,7 @@ local function ScanFood(self)
 						foodType = foodType,
 						itemLevel = itemLevel,
 						quality = quality,
+						description = CPE:GetBagItemDescription(bag, slot),
 					})
 				end
 			end
@@ -155,7 +156,9 @@ end
 
 local function OnSelect(self, button, food)
 	if food then
-		self.Detail:SetText(food.name .. "\n" .. ColorText(food.quality.text, food.quality))
+		local detail = food.name .. "\n" .. ColorText(food.quality.text, food.quality)
+			.. "\n|cffbbbbbb" .. food.foodType .. "  |  +" .. food.quality.happiness .. " happiness/tick|r"
+		self.Detail:SetText(CPE:AppendDescription(detail, food.description))
 	else
 		self.Detail:SetText("|cff888888No food|r")
 	end

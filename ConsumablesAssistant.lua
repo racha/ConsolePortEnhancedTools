@@ -100,6 +100,7 @@ local function ScanConsumables()
 						usable = usable,
 						cooldown = cooldown,
 						cooldownText = GetCooldownText(start, duration),
+						description = CPE:GetBagItemDescription(bag, slot),
 					}
 
 					if foodDrink and usable then
@@ -158,7 +159,7 @@ end
 local function OnSelect(self, button, item)
 	if item then
 		local state = item.cooldown and ("|cffffff40Cooldown " .. item.cooldownText .. "|r") or (item.usable and "|cff40ff60Usable|r" or "|cffaaaaaaConsumable|r")
-		self.Detail:SetText(item.category .. "\n" .. item.name .. "\n" .. state)
+		self.Detail:SetText(CPE:AppendDescription(item.category .. "\n" .. item.name .. "\n" .. state, item.description))
 	else
 		self.Detail:SetText("|cff888888No consumable|r")
 	end

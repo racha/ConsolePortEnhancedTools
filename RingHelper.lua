@@ -41,6 +41,28 @@ local BINDING_MAP = {
 	RIGHT = { "D", "RIGHT", "STRAFERIGHT", "TURNRIGHT", "CP_L_RIGHT" },
 }
 
+local REFRESH_EVENTS = {
+	"PLAYER_ENTERING_WORLD",
+	"BAG_UPDATE",
+	"BAG_UPDATE_COOLDOWN",
+	"SPELLS_CHANGED",
+	"LEARNED_SPELL_IN_TAB",
+	"ACTIONBAR_UPDATE_COOLDOWN",
+	"UNIT_AURA",
+	"UNIT_PET",
+	"UNIT_INVENTORY_CHANGED",
+	"PARTY_MEMBERS_CHANGED",
+	"UNIT_ENTERED_VEHICLE",
+	"UNIT_EXITED_VEHICLE",
+	"VEHICLE_UPDATE",
+	"PLAYER_CONTROL_LOST",
+	"PLAYER_CONTROL_GAINED",
+	"COMPANION_LEARNED",
+	"COMPANION_UPDATE",
+	"PLAYER_MOUNT_DISPLAY_CHANGED",
+	"PLAYER_REGEN_ENABLED",
+}
+
 local function ShortText(text, limit)
 	text = tostring(text or "")
 	limit = limit or 14
@@ -137,7 +159,11 @@ function Methods:ClearSelection()
 	self.selected = nil
 	self.selectedIndex = nil
 	if self.Detail then
-		self.Detail:SetText(self.ring.idleText or "")
+		if self.isEmpty then
+			self.Detail:SetText("|cff888888" .. (self.ring.emptyMessage or "No available items.") .. "|r")
+		else
+			self.Detail:SetText(self.ring.idleText or "")
+		end
 	end
 	self:SetLauncherAction()
 end
@@ -165,6 +191,7 @@ function Methods:SelectDirection(direction)
 end
 
 function Methods:ClearSelectionKeys()
+	if InCombatLockdown() then return end
 	if self.keyOwner then
 		ClearOverrideBindings(self.keyOwner)
 	end
@@ -236,21 +263,35 @@ function Methods:OnLauncherPostClick(button, down)
 	end
 end
 
-function Methods:Open()
-	if InCombatLockdown() then
-		self.core:Print((self.ring.title or "Ring") .. " is unavailable in combat.")
+function Methods:ScanItems()
+	local items = self.ring.scan(self) or {}
+	self[self.ring.itemsKey or "items"] = items
+	self.isEmpty = #items == 0
+	return items
+end
+
+function Methods:RefreshSecureActions()
+	if InCombatLockdown() or not self.ring.scan then
 		return
 	end
+
+	self:ScanItems()
+	self:Refresh()
+	if not self:IsShown() then
+		self:ClearSelection()
+	end
+end
+
+function Methods:Open()
 	if self.ring.validate and not self.ring.validate(self) then
 		return
 	end
 
-	local items = self.ring.scan(self) or {}
-	self[self.ring.itemsKey or "items"] = items
-
-	if #items == 0 then
-		self.core:Print(self.ring.emptyMessage or "No available items.")
-		return
+	local items = self:GetRingItems()
+	if InCombatLockdown() then
+		self.isEmpty = not items or #items == 0
+	else
+		items = self:ScanItems()
 	end
 
 	self:Refresh()
@@ -362,8 +403,15 @@ function Methods:CreateButton(index)
 		self.ring.createButtonRegions(self, button, index)
 	end
 
-	button:SetScript("PostClick", function()
+	button:SetScript("PostClick", function(buttonSelf, clickedButton, down)
+		if self.ring.disableClickInCombat and InCombatLockdown() then
+			return
+		end
+		local item = self:GetButtonItem(buttonSelf)
 		self:Hide()
+		if self.ring.onClick then
+			self.ring.onClick(self, buttonSelf, item, index, clickedButton, down)
+		end
 	end)
 	button:SetScript("OnEnter", function(buttonSelf)
 		self:Select(index)
@@ -500,6 +548,13 @@ function Methods:OnInitialize()
 	self:CreateLauncher()
 	self:CreateSelectors()
 	self:CreateFrame()
+	for _, event in ipairs(REFRESH_EVENTS) do
+		pcall(self.RegisterEvent, self, event)
+	end
+	self:SetScript("OnEvent", function(frame)
+		frame:RefreshSecureActions()
+	end)
+	self:RefreshSecureActions()
 end
 
 function RingHelper:Mixin(frame, config)

@@ -47,6 +47,7 @@ local function ScanTraps()
 				noMana = noMana,
 				cooldown = cooldown,
 				cooldownText = GetCooldownText(start, duration),
+				description = CPE:GetSpellDescriptionText(info.id, name),
 			})
 		end
 	end
@@ -69,7 +70,7 @@ end
 local function OnSelect(self, button, trap)
 	if trap then
 		local state = trap.cooldown and ("|cffffff40Cooldown " .. trap.cooldownText .. "|r") or (trap.usable and "|cff40ff60Ready|r" or "|cffff4040Unavailable|r")
-		self.Detail:SetText(trap.name .. "\n" .. state)
+		self.Detail:SetText(CPE:AppendDescription(trap.name .. "\n" .. state, trap.description))
 	else
 		self.Detail:SetText("|cff888888No trap|r")
 	end

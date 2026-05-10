@@ -82,6 +82,7 @@ local function ScanAspects()
 				other = active and caster ~= "player",
 				caster = caster,
 				casterName = casterName,
+				description = CPE:GetSpellDescriptionText(info.id, name),
 			})
 		end
 	end
@@ -109,7 +110,7 @@ local function OnSelect(self, button, aspect)
 		elseif aspect.active then
 			status = "\n|cff40ff60Active|r"
 		end
-		self.Detail:SetText(aspect.name .. status)
+		self.Detail:SetText(CPE:AppendDescription(aspect.name .. status, aspect.description))
 	else
 		self.Detail:SetText("|cff888888No aspect|r")
 	end

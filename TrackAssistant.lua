@@ -41,6 +41,7 @@ local function ScanTracks()
 				name = name,
 				icon = icon or "Interface\\Icons\\Ability_Tracking",
 				active = IsTrackingActive(name),
+				description = CPE:GetSpellDescriptionText(info.id, name),
 			})
 		end
 	end
@@ -62,7 +63,7 @@ end
 
 local function OnSelect(self, button, track)
 	if track then
-		self.Detail:SetText(track.name .. (track.active and "\n|cff40ff60Active|r" or ""))
+		self.Detail:SetText(CPE:AppendDescription(track.name .. (track.active and "\n|cff40ff60Active|r" or ""), track.description))
 	else
 		self.Detail:SetText("|cff888888No tracking|r")
 	end

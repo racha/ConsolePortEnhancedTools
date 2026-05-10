@@ -63,6 +63,7 @@ local function ScanAmmo()
 				equippable = false,
 				itemType = itemType,
 				itemEquipLoc = itemEquipLoc,
+				description = CPE:GetItemDescription(equippedLink),
 			})
 		end
 	end
@@ -88,6 +89,7 @@ local function ScanAmmo()
 						equippable = itemID ~= equippedID,
 						itemType = itemType,
 						itemEquipLoc = itemEquipLoc,
+						description = CPE:GetBagItemDescription(bag, slot),
 					})
 				end
 			end
@@ -118,7 +120,7 @@ end
 local function OnSelect(self, button, ammo)
 	if ammo then
 		local status = ammo.current and "|cff40ff60Equipped|r" or "|cffffff40Release to equip|r"
-		self.Detail:SetText(ammo.name .. "\n" .. status)
+		self.Detail:SetText(CPE:AppendDescription(ammo.name .. "\n" .. status, ammo.description))
 	else
 		self.Detail:SetText("|cff888888No ammo|r")
 	end

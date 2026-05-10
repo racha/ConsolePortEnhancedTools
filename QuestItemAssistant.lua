@@ -58,6 +58,7 @@ local function ScanQuestItems()
 							usable = usable,
 							cooldown = cooldown,
 							cooldownText = GetCooldownText(start, duration),
+							description = CPE:GetBagItemDescription(bag, slot),
 						})
 					end
 				end
@@ -86,7 +87,7 @@ end
 local function OnSelect(self, button, item)
 	if item then
 		local state = item.cooldown and ("|cffffff40Cooldown " .. item.cooldownText .. "|r") or (item.usable and "|cff40ff60Usable|r" or "|cffaaaaaaQuest item|r")
-		self.Detail:SetText(item.name .. "\n" .. state)
+		self.Detail:SetText(CPE:AppendDescription(item.name .. "\n" .. state, item.description))
 	else
 		self.Detail:SetText("|cff888888No quest item|r")
 	end

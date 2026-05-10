@@ -33,6 +33,7 @@ local function ScanProfessions()
 				name = name,
 				icon = icon or "Interface\\Icons\\Trade_Engineering",
 				cooldown = cooldown,
+				description = CPE:GetSpellDescriptionText(info.id, name),
 			})
 		end
 	end
@@ -54,7 +55,8 @@ end
 
 local function OnSelect(self, button, profession)
 	if profession then
-		self.Detail:SetText(profession.name)
+		local state = profession.cooldown and "\n|cffffff40On cooldown|r" or ""
+		self.Detail:SetText(CPE:AppendDescription(profession.name .. state, profession.description))
 	else
 		self.Detail:SetText("|cff888888No profession|r")
 	end
