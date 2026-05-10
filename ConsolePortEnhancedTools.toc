@@ -1,7 +1,7 @@
 ## Interface: 30300
 ## Title: ConsolePort Enhanced Tools
 ## Notes: Optional ConsolePortLK tools and helpers.
-## Version: 2026.05.10
+## Version: 2026.05.10.1
 ## Author: ConsolePortEnhancedTools contributors
 ## RequiredDeps: ConsolePort
 ## OptionalDeps: ConsolePortBar
@@ -11,6 +11,7 @@ Bindings.xml
 
 Core.lua
 RingHelper.lua
+ClassAssistants.lua
 FoodDB.lua
 FeedPetAssistant.lua
 AspectAssistant.lua

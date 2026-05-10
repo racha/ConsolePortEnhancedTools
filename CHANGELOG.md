@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026.05.10.1
+
+- Added class-colored binding groups for Druid, Mage, Paladin, Priest, Rogue, Shaman, Warlock, and Warrior.
+- Added Druid `Form Ring` and `Buff Ring`.
+- Added Mage `Portal Ring`, `Teleport Ring`, and `Food/Drink Ring`.
+- Added Paladin `Aura Assistant`, `Seal Assistant`, and `Blessing Assistant`.
+- Added Priest `Buff Assistant`.
+- Added Rogue `Poison Assistant` for poisons in bags.
+- Added Shaman `Totem Assistant`, `Weapon Imbue Ring`, `Shield Assistant`, and `Utility Ring`.
+- Added Warlock `Daemon Assistant`, `Stone Assistant`, and `Summon Assistant`.
+- Added Warrior `Stance Assistant` and `Shout Assistant`.
+- Added combat-entry cleanup so an open ring closes and clears directional state when combat starts.
+- Verified all enhanced-tools Lua files with `luac5.4 -p`.
+
 ## 2026.05.10
 
 - Added `ConsolePort Enhanced General` and `ConsolePort Enhanced Hunter` binding groups.

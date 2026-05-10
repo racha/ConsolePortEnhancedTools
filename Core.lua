@@ -9,7 +9,15 @@ ns.ADDON = ADDON
 local FEED_PET_SPELL_ID = 6991
 
 local CLASS_COLOR_FALLBACKS = {
+	DRUID = { r = 1.00, g = 0.49, b = 0.04 },
 	HUNTER = { r = 0.67, g = 0.83, b = 0.45 },
+	MAGE = { r = 0.41, g = 0.80, b = 0.94 },
+	PALADIN = { r = 0.96, g = 0.55, b = 0.73 },
+	PRIEST = { r = 1.00, g = 1.00, b = 1.00 },
+	ROGUE = { r = 1.00, g = 0.96, b = 0.41 },
+	SHAMAN = { r = 0.00, g = 0.44, b = 0.87 },
+	WARLOCK = { r = 0.58, g = 0.51, b = 0.79 },
+	WARRIOR = { r = 0.78, g = 0.61, b = 0.43 },
 }
 
 local TOOL_GROUPS = {
@@ -22,6 +30,46 @@ local TOOL_GROUPS = {
 		order = 2,
 		name = "ConsolePort Enhanced Hunter",
 		class = "HUNTER",
+	},
+	druid = {
+		order = 3,
+		name = "ConsolePort Enhanced Druid",
+		class = "DRUID",
+	},
+	mage = {
+		order = 4,
+		name = "ConsolePort Enhanced Mage",
+		class = "MAGE",
+	},
+	paladin = {
+		order = 5,
+		name = "ConsolePort Enhanced Paladin",
+		class = "PALADIN",
+	},
+	priest = {
+		order = 6,
+		name = "ConsolePort Enhanced Priest",
+		class = "PRIEST",
+	},
+	rogue = {
+		order = 7,
+		name = "ConsolePort Enhanced Rogue",
+		class = "ROGUE",
+	},
+	shaman = {
+		order = 8,
+		name = "ConsolePort Enhanced Shaman",
+		class = "SHAMAN",
+	},
+	warlock = {
+		order = 9,
+		name = "ConsolePort Enhanced Warlock",
+		class = "WARLOCK",
+	},
+	warrior = {
+		order = 10,
+		name = "ConsolePort Enhanced Warrior",
+		class = "WARRIOR",
 	},
 }
 
@@ -180,6 +228,214 @@ local TOOL_DEFS = {
 		fallbackIcon = "Interface\\Icons\\INV_Ammo_Arrow_02",
 		aliases = { "ammo", "arrows", "bullets" },
 	},
+	{
+		key = "druidform",
+		group = "druid",
+		module = "DruidFormAssistant",
+		name = "Form Ring",
+		launcher = "ConsolePortEnhancedToolsDruidFormAssistant",
+		luaBinding = "CPE_DRUIDFORMASSISTANT",
+		spellID = 768,
+		fallbackIcon = "Interface\\Icons\\Ability_Druid_CatForm",
+		aliases = { "druidform", "forms", "form" },
+	},
+	{
+		key = "druidbuff",
+		group = "druid",
+		module = "DruidBuffAssistant",
+		name = "Buff Ring",
+		launcher = "ConsolePortEnhancedToolsDruidBuffAssistant",
+		luaBinding = "CPE_DRUIDBUFFASSISTANT",
+		spellID = 1126,
+		fallbackIcon = "Interface\\Icons\\Spell_Nature_Regeneration",
+		aliases = { "druidbuff", "druidbuffs", "mark" },
+	},
+	{
+		key = "mageportal",
+		group = "mage",
+		module = "MagePortalAssistant",
+		name = "Portal Ring",
+		launcher = "ConsolePortEnhancedToolsMagePortalAssistant",
+		luaBinding = "CPE_MAGEPORTALASSISTANT",
+		spellID = 10059,
+		fallbackIcon = "Interface\\Icons\\Spell_Arcane_PortalStormWind",
+		aliases = { "portal", "portals", "mageportal" },
+	},
+	{
+		key = "mageteleport",
+		group = "mage",
+		module = "MageTeleportAssistant",
+		name = "Teleport Ring",
+		launcher = "ConsolePortEnhancedToolsMageTeleportAssistant",
+		luaBinding = "CPE_MAGETELEPORTASSISTANT",
+		spellID = 3561,
+		fallbackIcon = "Interface\\Icons\\Spell_Arcane_TeleportStormWind",
+		aliases = { "teleport", "teleports", "mageteleport" },
+	},
+	{
+		key = "magefooddrink",
+		group = "mage",
+		module = "MageFoodDrinkAssistant",
+		name = "Food/Drink Ring",
+		launcher = "ConsolePortEnhancedToolsMageFoodDrinkAssistant",
+		luaBinding = "CPE_MAGEFOODDRINKASSISTANT",
+		spellID = 587,
+		fallbackIcon = "Interface\\Icons\\INV_Misc_Food_73CinnamonRoll",
+		aliases = { "magefood", "magewater", "refreshment", "fooddrink" },
+	},
+	{
+		key = "paladinaura",
+		group = "paladin",
+		module = "PaladinAuraAssistant",
+		name = "Aura Assistant",
+		launcher = "ConsolePortEnhancedToolsPaladinAuraAssistant",
+		luaBinding = "CPE_PALADINAURAASSISTANT",
+		spellID = 465,
+		fallbackIcon = "Interface\\Icons\\Spell_Holy_DevotionAura",
+		aliases = { "aura", "auras", "paladinaura" },
+	},
+	{
+		key = "paladinseal",
+		group = "paladin",
+		module = "PaladinSealAssistant",
+		name = "Seal Assistant",
+		launcher = "ConsolePortEnhancedToolsPaladinSealAssistant",
+		luaBinding = "CPE_PALADINSEALASSISTANT",
+		spellID = 21084,
+		fallbackIcon = "Interface\\Icons\\Ability_ThunderBolt",
+		aliases = { "seal", "seals", "paladinseal" },
+	},
+	{
+		key = "paladinblessing",
+		group = "paladin",
+		module = "PaladinBlessingAssistant",
+		name = "Blessing Assistant",
+		launcher = "ConsolePortEnhancedToolsPaladinBlessingAssistant",
+		luaBinding = "CPE_PALADINBLESSINGASSISTANT",
+		spellID = 19740,
+		fallbackIcon = "Interface\\Icons\\Spell_Holy_FistOfJustice",
+		aliases = { "blessing", "blessings", "paladinblessing" },
+	},
+	{
+		key = "priestbuff",
+		group = "priest",
+		module = "PriestBuffAssistant",
+		name = "Buff Assistant",
+		launcher = "ConsolePortEnhancedToolsPriestBuffAssistant",
+		luaBinding = "CPE_PRIESTBUFFASSISTANT",
+		spellID = 1243,
+		fallbackIcon = "Interface\\Icons\\Spell_Holy_WordFortitude",
+		aliases = { "priestbuff", "priestbuffs", "fortitude" },
+	},
+	{
+		key = "roguepoison",
+		group = "rogue",
+		module = "RoguePoisonAssistant",
+		name = "Poison Assistant",
+		launcher = "ConsolePortEnhancedToolsRoguePoisonAssistant",
+		luaBinding = "CPE_ROGUEPOISONASSISTANT",
+		fallbackIcon = "Interface\\Icons\\Ability_Rogue_DualWeild",
+		aliases = { "poison", "poisons", "roguepoison" },
+	},
+	{
+		key = "shamantotem",
+		group = "shaman",
+		module = "ShamanTotemAssistant",
+		name = "Totem Assistant",
+		launcher = "ConsolePortEnhancedToolsShamanTotemAssistant",
+		luaBinding = "CPE_SHAMANTOTEMASSISTANT",
+		spellID = 8075,
+		fallbackIcon = "Interface\\Icons\\Spell_Nature_EarthBindTotem",
+		aliases = { "totem", "totems", "shamantotem" },
+	},
+	{
+		key = "shamanweapon",
+		group = "shaman",
+		module = "ShamanWeaponAssistant",
+		name = "Weapon Imbue Ring",
+		launcher = "ConsolePortEnhancedToolsShamanWeaponAssistant",
+		luaBinding = "CPE_SHAMANWEAPONASSISTANT",
+		spellID = 8232,
+		fallbackIcon = "Interface\\Icons\\Spell_Nature_Cyclone",
+		aliases = { "imbue", "imbues", "weaponimbue", "shamanweapon" },
+	},
+	{
+		key = "shamanshield",
+		group = "shaman",
+		module = "ShamanShieldAssistant",
+		name = "Shield Assistant",
+		launcher = "ConsolePortEnhancedToolsShamanShieldAssistant",
+		luaBinding = "CPE_SHAMANSHIELDASSISTANT",
+		spellID = 324,
+		fallbackIcon = "Interface\\Icons\\Spell_Nature_LightningShield",
+		aliases = { "shield", "shields", "shamanshield" },
+	},
+	{
+		key = "shamanutility",
+		group = "shaman",
+		module = "ShamanUtilityAssistant",
+		name = "Utility Ring",
+		launcher = "ConsolePortEnhancedToolsShamanUtilityAssistant",
+		luaBinding = "CPE_SHAMANUTILITYASSISTANT",
+		spellID = 2645,
+		fallbackIcon = "Interface\\Icons\\Spell_Nature_SpiritWolf",
+		aliases = { "shamanutility", "shamanutil" },
+	},
+	{
+		key = "warlockdaemon",
+		group = "warlock",
+		module = "WarlockDaemonAssistant",
+		name = "Daemon Assistant",
+		launcher = "ConsolePortEnhancedToolsWarlockDaemonAssistant",
+		luaBinding = "CPE_WARLOCKDAEMONASSISTANT",
+		spellID = 688,
+		fallbackIcon = "Interface\\Icons\\Spell_Shadow_SummonImp",
+		aliases = { "daemon", "demons", "demon", "warlockdaemon" },
+	},
+	{
+		key = "warlockstone",
+		group = "warlock",
+		module = "WarlockStoneAssistant",
+		name = "Stone Assistant",
+		launcher = "ConsolePortEnhancedToolsWarlockStoneAssistant",
+		luaBinding = "CPE_WARLOCKSTONEASSISTANT",
+		spellID = 6201,
+		fallbackIcon = "Interface\\Icons\\INV_Stone_04",
+		aliases = { "stone", "stones", "warlockstone" },
+	},
+	{
+		key = "warlocksummon",
+		group = "warlock",
+		module = "WarlockSummonAssistant",
+		name = "Summon Assistant",
+		launcher = "ConsolePortEnhancedToolsWarlockSummonAssistant",
+		luaBinding = "CPE_WARLOCKSUMMONASSISTANT",
+		spellID = 698,
+		fallbackIcon = "Interface\\Icons\\Spell_Shadow_Twilight",
+		aliases = { "summon", "summons", "warlocksummon" },
+	},
+	{
+		key = "warriorstance",
+		group = "warrior",
+		module = "WarriorStanceAssistant",
+		name = "Stance Assistant",
+		launcher = "ConsolePortEnhancedToolsWarriorStanceAssistant",
+		luaBinding = "CPE_WARRIORSTANCEASSISTANT",
+		spellID = 2457,
+		fallbackIcon = "Interface\\Icons\\Ability_Warrior_OffensiveStance",
+		aliases = { "stance", "stances", "warriorstance" },
+	},
+	{
+		key = "warriorshout",
+		group = "warrior",
+		module = "WarriorShoutAssistant",
+		name = "Shout Assistant",
+		launcher = "ConsolePortEnhancedToolsWarriorShoutAssistant",
+		luaBinding = "CPE_WARRIORSHOUTASSISTANT",
+		spellID = 6673,
+		fallbackIcon = "Interface\\Icons\\Ability_Warrior_BattleShout",
+		aliases = { "shout", "shouts", "warriorshout" },
+	},
 }
 
 for _, tool in ipairs(TOOL_DEFS) do
@@ -227,6 +483,9 @@ end
 _G.BINDING_HEADER_CPE_ENHANCEMENT = "ConsolePort Enhancement"
 _G.BINDING_HEADER_CPE_ENHANCEMENT_GENERAL = GetGroupName("general")
 _G.BINDING_HEADER_CPE_ENHANCEMENT_HUNTER = GetGroupName("hunter")
+for groupKey in pairs(TOOL_GROUPS) do
+	_G["BINDING_HEADER_CPE_ENHANCEMENT_" .. groupKey:upper()] = GetGroupName(groupKey)
+end
 for _, tool in ipairs(TOOL_DEFS) do
 	_G["BINDING_NAME_" .. tool.luaBinding] = tool.name
 	_G["BINDING_NAME_" .. tool.cpBinding] = tool.name
@@ -624,6 +883,8 @@ function CPE:OpenRingBinding(moduleName, keystate)
 	if not module then return end
 	if keystate == "down" then
 		module:Open()
+	elseif module.Close then
+		module:Close()
 	else
 		module:Hide()
 	end
@@ -631,8 +892,12 @@ end
 
 function CPE:CloseAllRings()
 	for _, module in pairs(self.modules) do
-		if module.Hide and module:IsShown() then
-			module:Hide()
+		if module:IsShown() then
+			if module.Close then
+				module:Close()
+			else
+				module:Hide()
+			end
 		end
 	end
 end

@@ -60,6 +60,7 @@ local REFRESH_EVENTS = {
 	"COMPANION_LEARNED",
 	"COMPANION_UPDATE",
 	"PLAYER_MOUNT_DISPLAY_CHANGED",
+	"PLAYER_REGEN_DISABLED",
 	"PLAYER_REGEN_ENABLED",
 }
 
@@ -245,7 +246,7 @@ end
 
 function Methods:ToggleFromBinding()
 	if self:IsShown() then
-		self:Hide()
+		self:Close()
 	else
 		self:Open()
 	end
@@ -256,11 +257,25 @@ function Methods:OnLauncherPostClick(button, down)
 		self:Open()
 	elseif down == false then
 		if self:IsShown() then
-			self:Hide()
+			self:Close()
 		end
 	else
 		self:ToggleFromBinding()
 	end
+end
+
+function Methods:Close()
+	if self:IsShown() then
+		pcall(self.Hide, self)
+	end
+end
+
+function Methods:CloseForCombat()
+	if not InCombatLockdown() then
+		self:ClearSelectionKeys()
+	end
+	wipe(self.keys)
+	self:Close()
 end
 
 function Methods:ScanItems()
@@ -408,7 +423,7 @@ function Methods:CreateButton(index)
 			return
 		end
 		local item = self:GetButtonItem(buttonSelf)
-		self:Hide()
+		self:Close()
 		if self.ring.onClick then
 			self.ring.onClick(self, buttonSelf, item, index, clickedButton, down)
 		end
@@ -443,8 +458,17 @@ function Methods:CreateLauncher()
 end
 
 function Methods:CreateSelectors()
-	self.keyOwner = CreateFrame("Frame", self.ring.keyOwnerName, UIParent)
+	self.keyOwner = CreateFrame("Frame", self.ring.keyOwnerName, UIParent, "SecureHandlerStateTemplate")
 	self.selectors = {}
+
+	if RegisterStateDriver then
+		self.keyOwner:SetAttribute("_onstate-combat", [[
+			if newstate then
+				self:ClearBindings()
+			end
+		]])
+		RegisterStateDriver(self.keyOwner, "combat", "[combat] true; nil")
+	end
 
 	for direction in pairs(DIRECTION_INDEX) do
 		local dir = direction
@@ -520,7 +544,7 @@ function Methods:CreateFrame()
 	self.keys = {}
 	self:SetScript("OnKeyDown", function(frame, key)
 		if key == "ESCAPE" then
-			frame:Hide()
+			frame:Close()
 			return
 		end
 
@@ -551,8 +575,12 @@ function Methods:OnInitialize()
 	for _, event in ipairs(REFRESH_EVENTS) do
 		pcall(self.RegisterEvent, self, event)
 	end
-	self:SetScript("OnEvent", function(frame)
-		frame:RefreshSecureActions()
+	self:SetScript("OnEvent", function(frame, event)
+		if event == "PLAYER_REGEN_DISABLED" then
+			frame:CloseForCombat()
+		else
+			frame:RefreshSecureActions()
+		end
 	end)
 	self:RefreshSecureActions()
 end

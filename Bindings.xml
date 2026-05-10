@@ -74,4 +74,99 @@
 			ConsolePortEnhancedTools:OpenRingBinding("AmmoAssistant", keystate);
 		end
 	</Binding>
+	<Binding name="CPE_DRUIDFORMASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_DRUID" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("DruidFormAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_DRUIDBUFFASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("DruidBuffAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_MAGEPORTALASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_MAGE" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("MagePortalAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_MAGETELEPORTASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("MageTeleportAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_MAGEFOODDRINKASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("MageFoodDrinkAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_PALADINAURAASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_PALADIN" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("PaladinAuraAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_PALADINSEALASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("PaladinSealAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_PALADINBLESSINGASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("PaladinBlessingAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_PRIESTBUFFASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_PRIEST" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("PriestBuffAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_ROGUEPOISONASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_ROGUE" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("RoguePoisonAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_SHAMANTOTEMASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_SHAMAN" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("ShamanTotemAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_SHAMANWEAPONASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("ShamanWeaponAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_SHAMANSHIELDASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("ShamanShieldAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_SHAMANUTILITYASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("ShamanUtilityAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_WARLOCKDAEMONASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_WARLOCK" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("WarlockDaemonAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_WARLOCKSTONEASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("WarlockStoneAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_WARLOCKSUMMONASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("WarlockSummonAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_WARRIORSTANCEASSISTANT" category="ConsolePort Enhanced Tools" header="CPE_ENHANCEMENT_WARRIOR" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("WarriorStanceAssistant", keystate);
+		end
+	</Binding>
+	<Binding name="CPE_WARRIORSHOUTASSISTANT" category="ConsolePort Enhanced Tools" runOnUp="true">
+		if ConsolePortEnhancedTools then
+			ConsolePortEnhancedTools:OpenRingBinding("WarriorShoutAssistant", keystate);
+		end
+	</Binding>
 </Bindings>
