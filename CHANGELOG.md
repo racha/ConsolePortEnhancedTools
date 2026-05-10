@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026.05.10.2
+
+- Reworked the README into an end-user focused project page.
+- Added a generated hero banner and visual ring overview for the README.
+- Added starter ring recommendations for leveling, dungeons, raiding, hunter, mage, and world PvP.
+- Updated the addon metadata version to `2026.05.10.2`.
+
 ## 2026.05.10.1
 
 - Added class-colored binding groups for Druid, Mage, Paladin, Priest, Rogue, Shaman, Warlock, and Warrior.

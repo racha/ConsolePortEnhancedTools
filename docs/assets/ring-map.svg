@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="680" viewBox="0 0 1180 680" role="img" aria-labelledby="title desc">
+  <title id="title">ConsolePort Enhanced Tools ring map</title>
+  <desc id="desc">Overview of controller rings grouped into general, hunter, and class-specific tools.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#263247"/>
+      <stop offset="55%" stop-color="#121822"/>
+      <stop offset="100%" stop-color="#090d13"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0%" stop-color="#f6d878"/>
+      <stop offset="100%" stop-color="#d08a35"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" x2="1">
+      <stop offset="0%" stop-color="#7bd4ff"/>
+      <stop offset="100%" stop-color="#5c7cff"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" x2="1">
+      <stop offset="0%" stop-color="#7dffb2"/>
+      <stop offset="100%" stop-color="#5ca96a"/>
+    </linearGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .title { fill: #fff4cf; font: 700 34px Arial, sans-serif; letter-spacing: .5px; }
+      .subtitle { fill: #aeb8ca; font: 16px Arial, sans-serif; }
+      .label { fill: #f8f2df; font: 700 15px Arial, sans-serif; }
+      .small { fill: #b9c2d5; font: 13px Arial, sans-serif; }
+      .tiny { fill: #8e9ab1; font: 12px Arial, sans-serif; }
+      .chip { fill: #182332; stroke: #34445d; stroke-width: 1; }
+      .panel { fill: rgba(15, 22, 32, .82); stroke: #2d3b51; stroke-width: 1.4; }
+      .ringSlot { fill: #131a25; stroke: #a7bed3; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1180" height="680" rx="28" fill="url(#bg)"/>
+  <circle cx="590" cy="270" r="195" fill="none" stroke="#26384f" stroke-width="28" opacity=".55"/>
+  <circle cx="590" cy="270" r="145" fill="none" stroke="#d8a44d" stroke-width="2" opacity=".75"/>
+  <circle cx="590" cy="270" r="112" fill="#101721" stroke="url(#gold)" stroke-width="3" filter="url(#softGlow)"/>
+  <text x="590" y="258" text-anchor="middle" class="title">Controller Rings</text>
+  <text x="590" y="286" text-anchor="middle" class="subtitle">hold, tilt, release</text>
+
+  <g filter="url(#softGlow)">
+    <circle class="ringSlot" cx="590" cy="76" r="45"/>
+    <circle class="ringSlot" cx="727" cy="133" r="45"/>
+    <circle class="ringSlot" cx="784" cy="270" r="45"/>
+    <circle class="ringSlot" cx="727" cy="407" r="45"/>
+    <circle class="ringSlot" cx="590" cy="464" r="45"/>
+    <circle class="ringSlot" cx="453" cy="407" r="45"/>
+    <circle class="ringSlot" cx="396" cy="270" r="45"/>
+    <circle class="ringSlot" cx="453" cy="133" r="45"/>
+  </g>
+
+  <text x="590" y="73" text-anchor="middle" class="label">Food</text>
+  <text x="590" y="93" text-anchor="middle" class="tiny">bags</text>
+  <text x="727" y="130" text-anchor="middle" class="label">Portal</text>
+  <text x="727" y="150" text-anchor="middle" class="tiny">spell</text>
+  <text x="784" y="267" text-anchor="middle" class="label">Marker</text>
+  <text x="784" y="287" text-anchor="middle" class="tiny">target</text>
+  <text x="727" y="404" text-anchor="middle" class="label">Mount</text>
+  <text x="727" y="424" text-anchor="middle" class="tiny">travel</text>
+  <text x="590" y="461" text-anchor="middle" class="label">Chat</text>
+  <text x="590" y="481" text-anchor="middle" class="tiny">world</text>
+  <text x="453" y="404" text-anchor="middle" class="label">Trap</text>
+  <text x="453" y="424" text-anchor="middle" class="tiny">hunter</text>
+  <text x="396" y="267" text-anchor="middle" class="label">Buff</text>
+  <text x="396" y="287" text-anchor="middle" class="tiny">class</text>
+  <text x="453" y="130" text-anchor="middle" class="label">Stance</text>
+  <text x="453" y="150" text-anchor="middle" class="tiny">combat</text>
+
+  <text x="52" y="70" class="title">ConsolePort Enhanced Tools</text>
+  <text x="54" y="100" class="subtitle">A controller-first utility layer for WoW 3.3.5a</text>
+
+  <g transform="translate(54 530)">
+    <rect class="panel" width="320" height="104" rx="16"/>
+    <text x="20" y="32" class="label">General rings</text>
+    <text x="20" y="58" class="small">Quest items, mounts, markers, emotes,</text>
+    <text x="20" y="78" class="small">chat, messages, party, vehicle controls.</text>
+  </g>
+
+  <g transform="translate(430 530)">
+    <rect class="panel" width="320" height="104" rx="16"/>
+    <text x="20" y="32" class="label">Hunter toolkit</text>
+    <text x="20" y="58" class="small">Feed pet, aspects, traps, tracking,</text>
+    <text x="20" y="78" class="small">ammo management, pet-food scoring.</text>
+  </g>
+
+  <g transform="translate(806 530)">
+    <rect class="panel" width="320" height="104" rx="16"/>
+    <text x="20" y="32" class="label">Class packs</text>
+    <text x="20" y="58" class="small">Druid, Mage, Paladin, Priest, Rogue,</text>
+    <text x="20" y="78" class="small">Shaman, Warlock, Warrior assistants.</text>
+  </g>
+
+  <g transform="translate(52 145)">
+    <rect class="chip" width="176" height="34" rx="17"/>
+    <circle cx="18" cy="17" r="6" fill="url(#gold)"/>
+    <text x="34" y="22" class="small">empty-state wheels</text>
+  </g>
+  <g transform="translate(52 190)">
+    <rect class="chip" width="226" height="34" rx="17"/>
+    <circle cx="18" cy="17" r="6" fill="url(#blue)"/>
+    <text x="34" y="22" class="small">highlight descriptions</text>
+  </g>
+  <g transform="translate(52 235)">
+    <rect class="chip" width="210" height="34" rx="17"/>
+    <circle cx="18" cy="17" r="6" fill="url(#green)"/>
+    <text x="34" y="22" class="small">combat close cleanup</text>
+  </g>
+
+  <g transform="translate(910 145)">
+    <rect class="chip" width="210" height="34" rx="17"/>
+    <circle cx="18" cy="17" r="6" fill="#ff7c5c"/>
+    <text x="34" y="22" class="small">class-colored groups</text>
+  </g>
+  <g transform="translate(910 190)">
+    <rect class="chip" width="188" height="34" rx="17"/>
+    <circle cx="18" cy="17" r="6" fill="#b991ff"/>
+    <text x="34" y="22" class="small">3.3.5a spell lists</text>
+  </g>
+  <g transform="translate(910 235)">
+    <rect class="chip" width="194" height="34" rx="17"/>
+    <circle cx="18" cy="17" r="6" fill="#ffdc73"/>
+    <text x="34" y="22" class="small">ConsolePort bindings</text>
+  </g>
+</svg>
